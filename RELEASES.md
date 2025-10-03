@@ -13,12 +13,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
   - Table of contents with deep-linkable headings.
 - Core **pages scaffolded**:
   - I. The Pinnacle of Civilization
-  - II. The Age of Decline
-  - III. The Geniuses
-  - IV. The Cataclysm
-  - V. The Aetherborn
-  - VI. The Ashen Age
-  - VII. The Current Age
+  ~~- II. The Age of Decline~~
+  ~~- III. The Geniuses~~
+  ~~- IV. The Cataclysm~~
+  ~~- V. The Aetherborn~~
+  ~~- VI. The Ashen Age~~
+  ~~- VII. The Current Age~~
 - **Styling foundation** with dark theme, card layout, and navigation.
 - Placeholder support for **Pagefind search integration** (UI not fully functional yet).
 - Added **project metadata** (`astro.config.mjs` with base path, MDX + React integrations).
