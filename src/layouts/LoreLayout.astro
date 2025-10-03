@@ -1,0 +1,109 @@
+---
+import "../styles/global.css";
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+const { title = "Codex of Ash & Echoes", sidebar = [] as NavItem[] } =
+  Astro.props;
+
+/** sidebar: [{label, href}] */
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} • Codex</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="brand"><a href="/">Codex of Ash & Echoes</a></div>
+        <nav><a href="/lore">Lore Index</a></nav>
+        <div id="search"></div>
+
+        {!import.meta.env.DEV && (
+        <>
+            {/* @ts-ignore - Astro directive */}
+            <link href={`${import.meta.env.BASE_URL}pagefind/pagefind-ui.css`} rel="stylesheet" is:inline />
+            {/* @ts-ignore - Astro directive */}
+            <script src={`${import.meta.env.BASE_URL}pagefind/pagefind-ui.js`} is:inline></script>
+
+            <script is:inline>
+            (function () {
+                const boot = () => {
+                const PF = window?.PagefindUI;
+                if (PF && document.getElementById('search')) {
+                    const bundlePath = `${import.meta.env.BASE_URL}pagefind/`;
+                    new PF({ element: '#search', bundlePath });
+                }
+                };
+                if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', boot);
+                } else {
+                boot();
+                }
+            })();
+            </script>
+        </>
+        )}
+
+        {import.meta.env.DEV && (
+        <p style="opacity:.7; margin:.5rem 0">
+            🔎 Search is available in <code>preview</code>/<code>production</code> (after build).
+        </p>
+        )}
+      </div>
+      <div class="layout">
+        <aside class="sidebar">
+          <h3>Sections</h3>
+          <ul>
+            {
+              sidebar.map((s: NavItem) => (
+                <li>
+                  <a href={s.href}>{s.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+          <hr />
+          <h3>On this page</h3>
+          <div id="toc"></div>
+        </aside>
+
+        <main class="card">
+          <slot />
+        </main>
+      </div>
+
+      <p style="opacity:.7; margin-top:1rem">
+        © 2025 Evendyce. All Rights Reserved.
+      </p>
+    </div>
+
+    <script>
+      // minimal client-side TOC from headings
+      const root = document.querySelector("main");
+      const toc = document.getElementById("toc");
+      if (root && toc) {
+        const hs = [...root.querySelectorAll("h2, h3")];
+        const ul = document.createElement("ul");
+        hs.forEach((h) => {
+          if (!h.id)
+            h.id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+          const li = document.createElement("li");
+          li.style.marginLeft = h.tagName === "H3" ? "1rem" : "0";
+          const a = document.createElement("a");
+          a.href = "#" + h.id;
+          a.textContent = h.textContent;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        toc.appendChild(ul);
+      }
+    </script>
+  </body>
+</html>

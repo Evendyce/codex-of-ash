@@ -1,5 +1,5 @@
 ---
-import LoreLayout from "../layouts/LoreLayout.astro";
+import LoreLayout from "../../layouts/LoreLayout.astro";
 
 const sidebar = [
   { label: "I. The Pinnacle of Civilization", href: "/lore/pinnacle-of-civilization" },
@@ -12,15 +12,10 @@ const sidebar = [
 ];
 ---
 
-<LoreLayout title="Codex of Ash & Echoes" {sidebar}>
-  <h1>Codex of Ash & Echoes</h1>
-  <p>A living lore book for an isekai world remade by a single act at the <strong>Pinnacle</strong>.</p>
-
-  <h2>Start reading</h2>
+<LoreLayout title="Lore Index" {sidebar}>
+  <h1>Lore Index</h1>
+  <p>Browse by era.</p>
   <ul>
     {sidebar.map(s => <li><a href={s.href}>{s.label}</a></li>)}
   </ul>
-
-  <h2>Notes</h2>
-  <p>This site is authored in <code>MDX</code>. Terms may show hover cards; headings are deep-linkable.</p>
 </LoreLayout>
